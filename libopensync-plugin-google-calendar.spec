@@ -2,13 +2,14 @@ Summary:	OpenSync Google Calendar Plugin
 Name:		libopensync-plugin-google-calendar
 Version:	0.22
 Release:	1
-License:	LGPL
+License:	GPL v2
 Group:		Libraries
 Source0:	http://www.opensync.org/attachment/wiki/download/%{name}-%{version}.tar.bz2?format=raw
 # Source0-md5:	e97862bc7479e449206e2a438a159336
 URL:		http://www.opensync.org/
 BuildRequires:	libopensync-devel >= %{version}
 BuildRequires:	python-httplib2
+BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -33,6 +34,7 @@ OpenSync.
 
 %prep
 %setup -q
+%{__sed} -i -e '1s,#!.*python,#!%{__python},' src/google-cal-helper.py
 
 %build
 %configure
@@ -49,7 +51,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README
+%doc README
+%{_libdir}/google-cal-helper
 %attr(755,root,root) %{_libdir}/opensync/plugins/*.so
 %{_libdir}/opensync/plugins/*.la
 %{_datadir}/opensync/defaults/*
