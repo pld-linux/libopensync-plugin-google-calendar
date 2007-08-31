@@ -35,11 +35,6 @@ OpenSync.
 %setup -q
 
 %build
-%{__aclocal}
-%{__libtoolize}
-%{__autoconf}
-%{__autoheader}
-%{__automake}
 %configure
 %{__make}
 
