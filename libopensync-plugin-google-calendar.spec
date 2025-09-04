@@ -5,9 +5,11 @@ Version:	0.22
 Release:	3
 License:	GPL v2+
 Group:		Libraries
-Source0:	http://www.opensync.org/attachment/wiki/download/%{name}-%{version}.tar.bz2?format=raw
+# originally http://www.opensync.org/attachment/wiki/download/%{name}-%{version}.tar.bz2?format=raw, dead now
+Source0:	%{name}-%{version}.tar.bz2
 # Source0-md5:	e97862bc7479e449206e2a438a159336
-URL:		http://www.opensync.org/
+# dead domain
+#URL:		http://www.opensync.org/
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	libopensync-devel >= %{version}
 BuildRequires:	libxml2-devel >= 2.0
