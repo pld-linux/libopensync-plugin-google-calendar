@@ -1,21 +1,23 @@
 Summary:	OpenSync Google Calendar Plugin
 Summary(pl.UTF-8):	Wtyczka Google Calendar do OpenSync
 Name:		libopensync-plugin-google-calendar
-Version:	0.22
-Release:	3
+Version:	0.36
+Release:	1
 License:	GPL v2+
 Group:		Libraries
 # originally http://www.opensync.org/attachment/wiki/download/%{name}-%{version}.tar.bz2?format=raw, dead now
+# resored from http://ftp.iij.ad.jp/pub/linux/momonga/5/Everything/SOURCES/libopensync-plugin-google-calendar-0.36.tar.bz2
 Source0:	%{name}-%{version}.tar.bz2
-# Source0-md5:	e97862bc7479e449206e2a438a159336
+# Source0-md5:	69b382845fb62a58e1976bc74a82dd86
+Patch0:		%{name}-libopensync0.39.patch
 # dead domain
 #URL:		http://www.opensync.org/
 BuildRequires:	glib2-devel >= 2.0
-BuildRequires:	libopensync-devel >= %{version}
-BuildRequires:	libxml2-devel >= 2.0
+BuildRequires:	libopensync-devel >= 0.39
 BuildRequires:	pkgconfig
 BuildRequires:	python-httplib2
 BuildRequires:	sed >= 4.0
+Requires:	libopensync >= 0.39
 Requires:	python-httplib2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -40,19 +42,22 @@ Ten pakiet zawiera wtyczkę Google Calendar dla szkieletu OpenSync.
 
 %prep
 %setup -q
-%{__sed} -i -e '1s,#!.*python,#!%{__python},' src/google-cal-helper.py
+%patch -P0 -p1
+
+%{__sed} -i -e '1s,/usr/bin/env python$,%{__python},' src/google-cal-helper.py
 
 %build
-%configure
+install -d build
+cd build
+%cmake ..
+
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-rm -f $RPM_BUILD_ROOT%{_libdir}/opensync/plugins/*.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -60,6 +65,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README
-%attr(755,root,root) %{_libdir}/google-cal-helper
-%attr(755,root,root) %{_libdir}/opensync/plugins/gcalendar.so
-%{_datadir}/opensync/defaults/google-calendar
+%attr(755,root,root) %{_libdir}/libopensync1/google-cal-helper
+%attr(755,root,root) %{_libdir}/libopensync1/plugins/gcalendar.so
+%{_datadir}/libopensync1/capabilities/google-calendar-gcal-2005.xml
+%{_datadir}/libopensync1/defaults/google-calendar
+%{_datadir}/libopensync1/descriptions/google-calendar.xml
