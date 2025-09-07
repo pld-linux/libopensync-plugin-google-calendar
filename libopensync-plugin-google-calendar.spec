@@ -13,11 +13,11 @@ Patch0:		%{name}-libopensync0.39.patch
 # dead domain
 #URL:		http://www.opensync.org/
 BuildRequires:	glib2-devel >= 2.0
-BuildRequires:	libopensync-devel >= 0.39
+BuildRequires:	libopensync-devel >= 1:0.39
 BuildRequires:	pkgconfig
 BuildRequires:	python-httplib2
 BuildRequires:	sed >= 4.0
-Requires:	libopensync >= 0.39
+Requires:	libopensync >= 1:0.39
 Requires:	python-httplib2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
